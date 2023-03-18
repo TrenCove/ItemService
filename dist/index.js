@@ -17,6 +17,7 @@ const body_parser_1 = __importDefault(require("body-parser"));
 const AddItem_1 = require("./AddItem");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const authenticationToken_1 = require("./middleware/authenticationToken");
+const searchItemName_1 = require("./searchItemName");
 const app = (0, express_1.default)();
 app.use(body_parser_1.default.json());
 app.use(body_parser_1.default.urlencoded({
@@ -37,6 +38,21 @@ app.post("/itemAdd", (req, res) => __awaiter(void 0, void 0, void 0, function* (
         }
         else {
             res.sendStatus(400);
+        }
+    }
+    catch (error) {
+        res.sendStatus(400);
+    }
+}));
+app.post("/searchItemName", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const response = yield (0, searchItemName_1.searchItemName)(req.body.itemName);
+        if (response == 200) {
+            const token = jsonwebtoken_1.default.sign(req.body.itemName, "memes");
+            res.json(token);
+        }
+        else {
+            res.sendStatus(response);
         }
     }
     catch (error) {
