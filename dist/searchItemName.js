@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.searchItemName = void 0;
 const sqlite3_1 = __importDefault(require("sqlite3"));
-const db = new sqlite3_1.default.Database("./db/items.db", (error) => {
+const db = new sqlite3_1.default.Database("./db/items.db", error => {
     if (error) {
         console.error(error.message);
     }
@@ -23,13 +23,13 @@ const db = new sqlite3_1.default.Database("./db/items.db", (error) => {
 function searchItemName(itemName) {
     return __awaiter(this, void 0, void 0, function* () {
         return new Promise((resolve, reject) => {
-            db.get("SELECT *FROM items WHERE itemName=?", [itemName], (error, row) => {
+            db.get("SELECT * FROM items WHERE itemName=?", [itemName], (error, row) => {
                 if (error) {
                     console.log(error);
                     return reject(400);
                 }
-                if (row && row.itemName) {
-                    console.log("item searched");
+                if (row.itemName == itemName) {
+                    console.log("item not searched");
                     console.log(row.itemID);
                     console.log(row.itemName);
                     console.log(row.itemPrice);
