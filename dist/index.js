@@ -15,7 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const AddItem_1 = require("./AddItem");
-const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const authenticationToken_1 = require("./middleware/authenticationToken");
 const searchItemName_1 = require("./searchItemName");
 const app = (0, express_1.default)();
@@ -31,10 +30,10 @@ app.get("/testAuth", authenticationToken_1.authenticateToken, (req, res) => {
 });
 app.post("/itemAdd", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const response = yield (0, AddItem_1.AddNewItem)(req.body.itemID, req.body.itemName, req.body.itemPrice, req.body.itemDesc);
+        const response = yield (0, AddItem_1.AddNewItem)(req.body.item_name, req.body.auction_type, req.body.end_time);
         if (response == 200) {
-            const token = jsonwebtoken_1.default.sign(req.body.itemName, "memes");
-            res.json(token);
+            res.sendStatus(200);
+            console.log("item added");
         }
         else {
             res.sendStatus(400);
@@ -44,16 +43,10 @@ app.post("/itemAdd", (req, res) => __awaiter(void 0, void 0, void 0, function* (
         res.sendStatus(400);
     }
 }));
-app.post("/searchItemName", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.get('/searchItemName/:item_name', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const response = yield (0, searchItemName_1.searchItemName)(req.body.itemName);
-        if (response == 200) {
-            const token = jsonwebtoken_1.default.sign(req.body.itemName, "memes");
-            res.json(token);
-        }
-        else {
-            res.sendStatus(response);
-        }
+        const response = yield (0, searchItemName_1.searchItemName)(req.params.item_name);
+        res.send(response);
     }
     catch (error) {
         res.sendStatus(400);

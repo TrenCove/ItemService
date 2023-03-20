@@ -9,30 +9,28 @@ const db = new sqlite3.Database("./db/items.db", (error) => {
 });
 
 export async function searchItemName(
-    itemName: string,
+    item_name: string,
 
-): Promise<number> {
+): Promise<itemDBrow> {
 
     return new Promise((resolve,reject) => {
-        db.get(
-            "SELECT *FROM items WHERE itemName=?",
-            [itemName],
-            (error, row: itemDBrow) => {
+        db.all(
+        
+            "SELECT * FROM items WHERE item_name LIKE'%"+item_name+"%'" ,
+            
+        
+            (error: any, row: any) => {
                 if (error){
                     console.log(error);
                     return reject(400);
                 }
                 
-                if(row && row.itemName){
+                if(row){
                     console.log("item searched");
-                    console.log(row.itemID)
-                    console.log(row.itemName)
-                    console.log(row.itemPrice)
-                    console.log(row.itemDesc)
-                    return resolve(200);
+                    return resolve(row);
                 }else{
                     console.log("Item by that name does not exist");
-                    return resolve(401);
+                    return resolve(row);
                 }
             }
         );

@@ -14,31 +14,27 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.searchItemName = void 0;
 const sqlite3_1 = __importDefault(require("sqlite3"));
-const db = new sqlite3_1.default.Database("./db/items.db", error => {
+const db = new sqlite3_1.default.Database("./db/items.db", (error) => {
     if (error) {
         console.error(error.message);
     }
     console.log("Connected to items database");
 });
-function searchItemName(itemName) {
+function searchItemName(item_name) {
     return __awaiter(this, void 0, void 0, function* () {
         return new Promise((resolve, reject) => {
-            db.get("SELECT * FROM items WHERE itemName=?", [itemName], (error, row) => {
+            db.all("SELECT * FROM items WHERE item_name LIKE'%" + item_name + "%'", (error, row) => {
                 if (error) {
                     console.log(error);
                     return reject(400);
                 }
-                if (row.itemName == itemName) {
-                    console.log("item not searched");
-                    console.log(row.itemID);
-                    console.log(row.itemName);
-                    console.log(row.itemPrice);
-                    console.log(row.itemDesc);
-                    return resolve(200);
+                if (row) {
+                    console.log("item searched");
+                    return resolve(row);
                 }
                 else {
                     console.log("Item by that name does not exist");
-                    return resolve(401);
+                    return resolve(row);
                 }
             });
         });

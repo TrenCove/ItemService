@@ -20,10 +20,10 @@ const db = new sqlite3_1.default.Database("./db/items.db", error => {
     }
     console.log("Connected to items database");
 });
-function AddNewItem(itemID, itemName, itemPrice, itemDesc) {
+function AddNewItem(itemName, auctionType, endTime) {
     return __awaiter(this, void 0, void 0, function* () {
         return new Promise((resolve, reject) => {
-            db.run("INSERT INTO items (itemID, itemName, itemPrice, itemDesc) VALUES ($1,$2,$3,$4)", [itemID, itemName, itemPrice, itemDesc], (error) => {
+            db.run("INSERT INTO items (item_name, auction_type, end_time) VALUES ($1,$2,$3)", [itemName, auctionType, endTime], (error) => {
                 if (error) {
                     console.log(error);
                     return reject(400);

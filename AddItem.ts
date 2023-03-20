@@ -8,16 +8,15 @@ const db = new sqlite3.Database("./db/items.db", error => {
 });
 
 export async function AddNewItem(
-    itemID: number,
     itemName: string,
-    itemPrice: string,
-    itemDesc: string,
+    auctionType: string,
+    endTime: string,
 ): Promise<number> {
 
     return new Promise((resolve,reject) => {
         db.run(
-            "INSERT INTO items (itemID, itemName, itemPrice, itemDesc) VALUES ($1,$2,$3,$4)",
-            [itemID, itemName, itemPrice, itemDesc],
+            "INSERT INTO items (item_name, auction_type, end_time) VALUES ($1,$2,$3)",
+            [itemName, auctionType, endTime],
             (error) => {
                 if (error){
                     console.log(error);
