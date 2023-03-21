@@ -36,6 +36,11 @@ app.post(
         try{
             const response = await AddNewItem(
                 req.body.item_name,
+                req.body.description,
+                req.body.top_bidder,
+                req.body.price,
+                req.body.shipping_cost,
+                req.body.active,
                 req.body.auction_type,
                 req.body.end_time,
             
@@ -63,7 +68,7 @@ app.get(
             
             const response = await searchItemName(req.params.item_name);
 
-                res.send(response);
+                res.json(response);
             
         }catch (error){
             res.sendStatus(400);

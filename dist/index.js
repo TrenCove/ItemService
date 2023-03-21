@@ -30,7 +30,7 @@ app.get("/testAuth", authenticationToken_1.authenticateToken, (req, res) => {
 });
 app.post("/itemAdd", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const response = yield (0, AddItem_1.AddNewItem)(req.body.item_name, req.body.auction_type, req.body.end_time);
+        const response = yield (0, AddItem_1.AddNewItem)(req.body.item_name, req.body.description, req.body.top_bidder, req.body.price, req.body.shipping_cost, req.body.active, req.body.auction_type, req.body.end_time);
         if (response == 200) {
             res.sendStatus(200);
             console.log("item added");
@@ -46,7 +46,7 @@ app.post("/itemAdd", (req, res) => __awaiter(void 0, void 0, void 0, function* (
 app.get('/searchItemName/:item_name', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const response = yield (0, searchItemName_1.searchItemName)(req.params.item_name);
-        res.send(response);
+        res.json(response);
     }
     catch (error) {
         res.sendStatus(400);

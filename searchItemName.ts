@@ -1,5 +1,5 @@
 import sqlite3 from "sqlite3";
-import { itemDBrow } from "./types/interfaces";
+import { itemDbRow } from "./types/interfaces";
 
 const db = new sqlite3.Database("./db/items.db", (error) => {
     if (error){
@@ -11,7 +11,7 @@ const db = new sqlite3.Database("./db/items.db", (error) => {
 export async function searchItemName(
     item_name: string,
 
-): Promise<itemDBrow> {
+): Promise<itemDbRow> {
 
     return new Promise((resolve,reject) => {
         db.all(
@@ -19,7 +19,7 @@ export async function searchItemName(
             "SELECT * FROM items WHERE item_name LIKE'%"+item_name+"%'" ,
             
         
-            (error: any, row: any) => {
+            (error: any, row: itemDbRow) => {
                 if (error){
                     console.log(error);
                     return reject(400);
