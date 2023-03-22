@@ -102,9 +102,8 @@ app.get(
     ) => {
         try{
             
-            const response = await getAllItems(req.params.item_name);
-
-                res.json(response);
+            const response = await getAllItems();
+            res.json(response);
             
         }catch (error){
             res.sendStatus(400);

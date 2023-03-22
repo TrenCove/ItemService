@@ -65,7 +65,7 @@ app.get('/searchItemID/:item_id', (req, res) => __awaiter(void 0, void 0, void 0
 }));
 app.get('/getAllItems', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const response = yield (0, getAllItems_1.getAllItems)(req.params.item_name);
+        const response = yield (0, getAllItems_1.getAllItems)();
         res.json(response);
     }
     catch (error) {

@@ -5,7 +5,7 @@ const db = new sqlite3.Database("./db/items.db", (error) => {
     if (error){
         console.error(error.message);
     }
-    console.log("Connected to items database");
+    console.log("Connected searchItemID service to items database");
 });
 
 export async function searchItemID(

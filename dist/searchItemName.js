@@ -18,7 +18,7 @@ const db = new sqlite3_1.default.Database("./db/items.db", (error) => {
     if (error) {
         console.error(error.message);
     }
-    console.log("Connected to items database");
+    console.log("Connected searchItemsName service to items database");
 });
 function searchItemName(item_name) {
     return __awaiter(this, void 0, void 0, function* () {

@@ -5,11 +5,11 @@ const db = new sqlite3.Database("./db/items.db", (error) => {
     if (error){
         console.error(error.message);
     }
-    console.log("Connected to items database");
+    console.log("Connected AllItems Service to items database");
 });
 
 export async function getAllItems(
-    item_name: string,
+
 
 ): Promise<itemDbRow> {
 

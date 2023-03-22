@@ -5,7 +5,7 @@ const db = new sqlite3.Database("./db/items.db", (error) => {
     if (error){
         console.error(error.message);
     }
-    console.log("Connected to items database");
+    console.log("Connected searchItemsName service to items database");
 });
 
 export async function searchItemName(
@@ -18,7 +18,7 @@ export async function searchItemName(
         
             "SELECT * FROM items WHERE item_name LIKE'%"+item_name+"%'" ,
             
-        
+    
             (error: any, row: itemDbRow) => {
                 if (error){
                     console.log(error);
