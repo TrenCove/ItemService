@@ -5,6 +5,8 @@ import { AddNewItem } from "./AddItem";
 import jwt from "jsonwebtoken";
 import { authenticateToken } from "./middleware/authenticationToken";
 import { searchItemName } from "./searchItemName";
+import { searchItemID } from "./searchItemID";
+import { getAllItems } from "./getAllItems";
 
 
 const app: Express = express();
@@ -75,6 +77,41 @@ app.get(
         }
     }
 )
+app.get(
+    '/searchItemID/:item_id',
+    async (
+        req: Request,
+        res: Response
+    ) => {
+        try{
+            
+            const response = await searchItemID(req.params.item_id);
+
+                res.json(response);
+            
+        }catch (error){
+            res.sendStatus(400);
+        }
+    }
+)
+app.get(
+    '/getAllItems',
+    async (
+        req: Request,
+        res: Response
+    ) => {
+        try{
+            
+            const response = await getAllItems(req.params.item_name);
+
+                res.json(response);
+            
+        }catch (error){
+            res.sendStatus(400);
+        }
+    }
+)
+
 
 app.listen(port, () => {
  console.log(`App listening on PORT ${port}`);

@@ -17,6 +17,8 @@ const body_parser_1 = __importDefault(require("body-parser"));
 const AddItem_1 = require("./AddItem");
 const authenticationToken_1 = require("./middleware/authenticationToken");
 const searchItemName_1 = require("./searchItemName");
+const searchItemID_1 = require("./searchItemID");
+const getAllItems_1 = require("./getAllItems");
 const app = (0, express_1.default)();
 app.use(body_parser_1.default.json());
 app.use(body_parser_1.default.urlencoded({
@@ -46,6 +48,24 @@ app.post("/itemAdd", (req, res) => __awaiter(void 0, void 0, void 0, function* (
 app.get('/searchItemName/:item_name', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const response = yield (0, searchItemName_1.searchItemName)(req.params.item_name);
+        res.json(response);
+    }
+    catch (error) {
+        res.sendStatus(400);
+    }
+}));
+app.get('/searchItemID/:item_id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const response = yield (0, searchItemID_1.searchItemID)(req.params.item_id);
+        res.json(response);
+    }
+    catch (error) {
+        res.sendStatus(400);
+    }
+}));
+app.get('/getAllItems', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const response = yield (0, getAllItems_1.getAllItems)(req.params.item_name);
         res.json(response);
     }
     catch (error) {
