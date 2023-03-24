@@ -1,17 +1,25 @@
 import sqlite3 from "sqlite3";
-import { itemDbRow } from "./types/interfaces";
+import { itemDbRow } from "../types/interfaces";
 
 const db = new sqlite3.Database("./db/items.db", (error) => {
   if (error) {
     console.error(error.message);
   }
-  console.log("Connected searchItemsName service to items database");
+  console.log("Connected searchItemID service to items database");
 });
 
-export async function searchItemName(item_name: string): Promise<itemDbRow> {
+/**
+ * returns a single item with a specific item ID.
+ * 
+ * @param item_id - the ID of an item
+ * 
+ * 
+ * @returns the JSON of the item or an empty JSON if item doesnt exist.
+ */
+export async function searchItemID(item_id: string): Promise<itemDbRow> {
   return new Promise((resolve, reject) => {
-    db.all(
-      "SELECT * FROM items WHERE item_name LIKE'%" + item_name + "%'",
+    db.get(
+      "SELECT * FROM items WHERE item_id =" + item_id,
 
       (error: any, row: itemDbRow) => {
         if (error) {

@@ -1,5 +1,5 @@
 import sqlite3 from "sqlite3";
-import { auction_type } from "./types/interfaces";
+import { auction_type } from "../types/interfaces";
 
 const db = new sqlite3.Database("../db/items.db", (error) => {
   if (error) {
@@ -7,6 +7,23 @@ const db = new sqlite3.Database("../db/items.db", (error) => {
   }
   console.log("Connected AddNewItems service to items database");
 });
+
+
+/**
+ * Adds a new item into the items database.
+ * 
+ * @param item_name - The name of the item
+ * @param description - Description of the item
+ * @param top_bidder - Username of the top bidder
+ * @param price - Price of the item
+ * @param shipping_cost - cost of shipping the item
+ * @param active - Shows if the item is active or not
+ * @param auction_type - The auction type
+ * @param end_time - the end time of the auction
+ * 
+ * @returns A success or fail status code
+ * @beta
+*/
 
 export async function AddNewItem(
   item_name: string,

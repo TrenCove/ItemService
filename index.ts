@@ -1,11 +1,11 @@
 import express, { Express, Request, Response } from "express";
 import bodyParser from "body-parser";
 import { itemInfo } from "./types/interfaces";
-import { AddNewItem } from "./AddItem";
+import { AddNewItem } from "./functions/AddItem";
 import { authenticateToken } from "./middleware/authenticationToken";
-import { searchItemName } from "./searchItemName";
-import { searchItemID } from "./searchItemID";
-import { getAllItems } from "./getAllItems";
+import { searchItemName } from "./functions/searchItemName";
+import { searchItemID } from "./functions/searchItemID";
+import { getAllItems } from "./functions/getAllItems";
 import cors from "cors";
 
 const app: Express = express();
@@ -19,6 +19,16 @@ app.use(
 
 const port = 3002;
 
+
+/**
+ * Calls addNewItem method in the AddItems class. Uses post to write from a JSON
+ * to the method.
+ * Reads the response of the called method.
+ * 
+ * @returns a status code to see if the call went through.
+ * 
+ * @beta
+ */
 app.post(
   "/itemAdd", authenticateToken,
   async (req: Request<unknown, unknown, itemInfo, unknown>, res: Response) => {
@@ -46,6 +56,14 @@ app.post(
   }
 );
 
+/**
+ * Calls searchItemName method in the searchItemName class. Uses get to retrieve information from the URL.
+ * Reads the response of the called method.
+ * 
+ * @returns Either a JSON of the searchItemName response, or a Error status code.
+ * 
+ * @beta
+ */
 app.get("/searchItemName/:item_name", authenticateToken, async (req: Request, res: Response) => {
   try {
     const response = await searchItemName(req.params.item_name);
@@ -55,6 +73,15 @@ app.get("/searchItemName/:item_name", authenticateToken, async (req: Request, re
     res.sendStatus(400);
   }
 });
+
+/**
+ * Calls searchItemID method in the searchItemID class. Uses get to retrieve information from the URL.
+ * Reads the response of the called method.
+ * 
+ * @returns Either a JSON of the searchItemID response, or a Error status code.
+ * 
+ * @beta
+ */
 app.get("/searchItemID/:item_id", authenticateToken, async (req: Request, res: Response) => {
   try {
     const response = await searchItemID(req.params.item_id);
@@ -64,6 +91,14 @@ app.get("/searchItemID/:item_id", authenticateToken, async (req: Request, res: R
     res.sendStatus(400);
   }
 });
+/**
+ * Calls getAllItems method in the getAllItems class. Uses get to retrieve information from the URL.
+ * Reads the response of the called method.
+ * 
+ * @returns Either a JSON of the searchItemID response, or a Error status code.
+ * 
+ * @beta
+ */
 app.get("/getAllItems", authenticateToken, async (req: Request, res: Response) => {
   try {
     const response = await getAllItems();
