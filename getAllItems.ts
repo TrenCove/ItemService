@@ -8,12 +8,12 @@ const db = new sqlite3.Database("./db/items.db", (error) => {
   console.log("Connected AllItems Service to items database");
 });
 
-export async function getAllItems(): Promise<itemDbRow> {
+export async function getAllItems(): Promise<itemDbRow[]> {
   return new Promise((resolve, reject) => {
     db.all(
-      "SELECT * FROM items",
+      "SELECT * FROM items WHERE active='true'",
 
-      (error: any, row: itemDbRow) => {
+      (error: any, row: itemDbRow[]) => {
         if (error) {
           console.log(error);
           return reject(400);

@@ -1,7 +1,7 @@
 import sqlite3 from "sqlite3";
 import { auction_type } from "./types/interfaces";
 
-const db = new sqlite3.Database("./db/items.db", (error) => {
+const db = new sqlite3.Database("../db/items.db", (error) => {
   if (error) {
     console.error(error.message);
   }

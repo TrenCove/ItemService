@@ -10,8 +10,8 @@ const db = new sqlite3.Database("./db/items.db", (error) => {
 
 export async function searchItemID(item_id: string): Promise<itemDbRow> {
   return new Promise((resolve, reject) => {
-    db.all(
-      "SELECT * FROM items WHERE item_id LIKE'%" + item_id + "%'",
+    db.get(
+      "SELECT * FROM items WHERE item_id =" + item_id,
 
       (error: any, row: itemDbRow) => {
         if (error) {

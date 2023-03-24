@@ -2,7 +2,6 @@ import express, { Express, Request, Response } from "express";
 import bodyParser from "body-parser";
 import { itemInfo } from "./types/interfaces";
 import { AddNewItem } from "./AddItem";
-import jwt from "jsonwebtoken";
 import { authenticateToken } from "./middleware/authenticationToken";
 import { searchItemName } from "./searchItemName";
 import { searchItemID } from "./searchItemID";
@@ -20,14 +19,8 @@ app.use(
 
 const port = 3002;
 
-app.get("/", (req: Request, res: Response) => {});
-
-app.get("/testAuth", authenticateToken, (req: Request, res: Response) => {
-  res.send("Authenticated as " + req.user);
-});
-
 app.post(
-  "/itemAdd",
+  "/itemAdd", authenticateToken,
   async (req: Request<unknown, unknown, itemInfo, unknown>, res: Response) => {
     try {
       const response = await AddNewItem(
@@ -53,7 +46,7 @@ app.post(
   }
 );
 
-app.get("/searchItemName/:item_name", async (req: Request, res: Response) => {
+app.get("/searchItemName/:item_name", authenticateToken, async (req: Request, res: Response) => {
   try {
     const response = await searchItemName(req.params.item_name);
 
@@ -62,7 +55,7 @@ app.get("/searchItemName/:item_name", async (req: Request, res: Response) => {
     res.sendStatus(400);
   }
 });
-app.get("/searchItemID/:item_id", async (req: Request, res: Response) => {
+app.get("/searchItemID/:item_id", authenticateToken, async (req: Request, res: Response) => {
   try {
     const response = await searchItemID(req.params.item_id);
 
@@ -71,7 +64,7 @@ app.get("/searchItemID/:item_id", async (req: Request, res: Response) => {
     res.sendStatus(400);
   }
 });
-app.get("/getAllItems", async (req: Request, res: Response) => {
+app.get("/getAllItems", authenticateToken, async (req: Request, res: Response) => {
   try {
     const response = await getAllItems();
     res.json(response);
