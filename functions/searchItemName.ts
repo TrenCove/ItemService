@@ -1,7 +1,7 @@
 import sqlite3 from "sqlite3";
 import { itemDbRow } from "../types/interfaces";
 
-const db = new sqlite3.Database("./db/items.db", (error) => {
+const db = new sqlite3.Database("../db/items.db", (error) => {
   if (error) {
     console.error(error.message);
   }
@@ -12,14 +12,14 @@ const db = new sqlite3.Database("./db/items.db", (error) => {
  * 
  * @param item_name - name of the item search, could be a simple letter or the full name
  * 
- * @returns a JSON of several items that could potentially match the item name search
+ * @returns an array of items that match the query
  */
-export async function searchItemName(item_name: string): Promise<itemDbRow> {
+export async function searchItemName(item_name: string): Promise<itemDbRow[]> {
   return new Promise((resolve, reject) => {
     db.all(
       "SELECT * FROM items WHERE item_name LIKE'%" + item_name + "%'",
 
-      (error: any, row: itemDbRow) => {
+      (error: any, row: itemDbRow[]) => {
         if (error) {
           console.log(error);
           return reject(400);

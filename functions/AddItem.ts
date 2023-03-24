@@ -21,8 +21,7 @@ const db = new sqlite3.Database("../db/items.db", (error) => {
  * @param auction_type - The auction type
  * @param end_time - the end time of the auction
  * 
- * @returns A success or fail status code
- * @beta
+ * @returns A http success or fail status code
 */
 
 export async function AddNewItem(

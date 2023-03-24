@@ -1,7 +1,7 @@
 import sqlite3 from "sqlite3";
 import { itemDbRow } from "../types/interfaces";
 
-const db = new sqlite3.Database("./db/items.db", (error) => {
+const db = new sqlite3.Database("../db/items.db", (error) => {
   if (error) {
     console.error(error.message);
   }
@@ -13,7 +13,7 @@ const db = new sqlite3.Database("./db/items.db", (error) => {
 /**
  * Selects all items from the items database.
  * 
- * @returns a JSON of each item.
+ * @returns an array of items
  * 
  */
 export async function getAllItems(): Promise<itemDbRow[]> {
